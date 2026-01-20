@@ -17,9 +17,10 @@ export interface NavGroup {
 
 export interface NavItem {
     title: string;
-    href: NonNullable<InertiaLinkProps['href']>;
+    href?: NonNullable<InertiaLinkProps['href']>; // ← Agrega el "?" aquí
     icon?: LucideIcon | null;
     isActive?: boolean;
+    children?: NavItem[]; // ← Agrega esta línea
 }
 
 export interface SharedData {
