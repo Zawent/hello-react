@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\BodegaController;
+use App\Http\Controllers\ProductoController;
 
 Route::get('/', function () {
     return Inertia::render('welcome', [
@@ -17,15 +19,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::prefix('inventario')->name('inventario.')->group(function () {
-        Route::get('/productos', fn () => inertia('inventario/productos/index'))->name('productos.index');
-        Route::get('/movimientos', fn () => inertia('inventario/movimientos/index'))->name('movimientos.index');
-        
-        // Cambia esto:
+        Route::resource('productos', ProductoController::class)
+            ->parameters(['productos' => 'producto']);
+        Route::get('/movimientos', fn () => inertia('inventario/movimientos/index'))->name('movimientos.index');        
         Route::resource('proveedores', ProveedorController::class)->parameters([
             'proveedores' => 'proveedor'
         ]);
-        
-        Route::get('/bodegas', fn () => inertia('inventario/bodegas/index'))->name('bodegas.index');
+        Route::resource('bodegas', BodegaController::class)->parameters([
+            'bodegas' => 'bodega'
+        ]);
+
     });
 });
 

@@ -76,7 +76,11 @@ export default function ProveedoresIndex({ proveedores }: Props) {
                                 ) : (
                                     proveedores.map((prov) => (
                                         <tr key={prov.id} className="hover:bg-muted/50 transition-colors">
-                                            <td className="px-6 py-4 text-sm font-medium text-foreground">{prov.nombre}</td>
+                                            <td className="px-6 py-4 text-sm font-bold">
+                                                <Link href={`/inventario/proveedores/${prov.id}`} className="text-lime-600 hover:underline">
+                                                    {prov.nombre}
+                                                </Link>
+                                            </td>
                                             <td className="px-6 py-4 text-sm text-muted-foreground">{prov.telefono || '-'}</td>
                                             <td className="px-6 py-4 text-sm text-muted-foreground">{prov.correo || '-'}</td>
                                             <td className="px-6 py-4 text-center">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Producto;
 use App\Models\Proveedor;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,6 +19,19 @@ class ProveedorController extends Controller
 
         return Inertia::render('inventario/proveedores/index', [
             'proveedores' => $proveedores,
+        ]);
+    }
+
+    public function show(Proveedor $proveedor)
+    {
+        $this->authorizeEmpresa($proveedor);
+
+        return Inertia::render('inventario/proveedores/show', [
+            'proveedor' => $proveedor->load([
+                'productos' => function ($query) {
+                    $query->orderBy('nombre');
+                }
+            ]),
         ]);
     }
 
